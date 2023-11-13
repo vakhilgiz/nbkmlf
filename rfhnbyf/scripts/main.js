@@ -3349,6 +3349,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         $(".tooltipped").tooltip();
         const clip = new clipboard_1.Clipboard("canvas", true);
         $("#file").change(function (ev) {
+	    alert("3232");
             const files = $("#file").get(0).files;
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
