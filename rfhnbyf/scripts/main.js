@@ -2772,6 +2772,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
+					document.getElementById("loglbl").textContent = Math.round(progress * 100 / 7 + 28) + "%";
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
                     let idx = 0;
@@ -3349,7 +3350,6 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         $(".tooltipped").tooltip();
         const clip = new clipboard_1.Clipboard("canvas", true);
         $("#file").change(function (ev) {
-            alert("fa");
             const files = $("#file").get(0).files;
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
@@ -3370,9 +3370,8 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 };
                 reader.readAsDataURL(files[0]);
             }
-            toProcess();
         });
-        $("#bProcess").click(function () {
+        $("#btnProcess").click(function () {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
                     yield gui_2.process();
