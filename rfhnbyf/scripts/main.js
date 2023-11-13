@@ -3372,9 +3372,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             }
             toProcess();
         });
-        function  toProcess() {
-            alert("rere");
-        //$("#bProcess").click(function () {
+        $("#bProcess").click(function () {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
                     yield gui_2.process();
