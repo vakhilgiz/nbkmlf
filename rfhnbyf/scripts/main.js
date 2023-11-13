@@ -2772,7 +2772,6 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-					document.getElementById("loglbl").textContent = Math.round(progress * 100 / 7 + 28) + "%";
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
                     let idx = 0;
@@ -3349,7 +3348,8 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         $(".tabs").tabs();
         $(".tooltipped").tooltip();
         const clip = new clipboard_1.Clipboard("canvas", true);
-        $("#file").change(function (ev) {
+        //$("#file").change(function (ev) {
+        document.getElementsByClassName('bStart')[0].change(function (ev) {
             const files = $("#file").get(0).files;
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
