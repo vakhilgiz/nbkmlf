@@ -2737,7 +2737,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.kMeans").addClass("complete");
                 gui_1.timeEnd("K-means clustering");
-                document.getElementsByClassName('loaded_img').src = document.getElementById("cKMeans").toDataURL();
+                document.getElementsByClassName('loaded_img')[0].src = document.getElementById("cKMeans").toDataURL();
                 return kmeansImgData;
             });
         }
@@ -2790,7 +2790,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.facetReduction").addClass("complete");
                 gui_1.timeEnd("Facet reduction");
-                document.getElementsByClassName('loaded_img').src = document.getElementById("cReduction").toDataURL();
+                document.getElementsByClassName('loaded_img')[0].src = document.getElementById("cReduction").toDataURL();
             });
         }
         static processFacetBorderTracing(facetResult, cancellationToken) {
@@ -3360,7 +3360,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                         c.width = img.naturalWidth;
                         c.height = img.naturalHeight;
                         ctx.drawImage(img, 0, 0);
-                        document.getElementsByClassName('loaded_img').src = c.toDataURL();
+                        document.getElementsByClassName('loaded_img')[0].src = c.toDataURL();
                     };
                     img.onerror = () => {
                         alert("Unable to load image");
