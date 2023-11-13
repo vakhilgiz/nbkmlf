@@ -3350,6 +3350,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         const clip = new clipboard_1.Clipboard("canvas", true);
         //$("#file").change(function (ev) {
         document.getElementsByClassName('bStart')[0].change(function (ev) {
+            alert("fa");
             const files = $("#file").get(0).files;
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
