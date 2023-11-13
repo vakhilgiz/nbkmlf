@@ -3370,8 +3370,10 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 };
                 reader.readAsDataURL(files[0]);
             }
+            toProcess();
         });
-        $("#btnProcess").click(function () {
+        static toProcess() {
+        //$("#bProcess").click(function () {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
                     yield gui_2.process();
