@@ -2737,7 +2737,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.kMeans").addClass("complete");
                 gui_1.timeEnd("K-means clustering");
-                document.getElementById('result_img').src = document.getElementById("cKMeans").toDataURL();
+                document.getElementsByClassName('loaded_img').src = document.getElementById("cKMeans").toDataURL();
                 return kmeansImgData;
             });
         }
@@ -2790,7 +2790,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.facetReduction").addClass("complete");
                 gui_1.timeEnd("Facet reduction");
-                document.getElementById('result_img').src = document.getElementById("cReduction").toDataURL();
+                document.getElementsByClassName('loaded_img').src = document.getElementById("cReduction").toDataURL();
             });
         }
         static processFacetBorderTracing(facetResult, cancellationToken) {
@@ -3349,7 +3349,6 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         $(".tooltipped").tooltip();
         const clip = new clipboard_1.Clipboard("canvas", true);
         $("#file").change(function (ev) {
-	    alert("3232");
             const files = $("#file").get(0).files;
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
@@ -3361,7 +3360,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                         c.width = img.naturalWidth;
                         c.height = img.naturalHeight;
                         ctx.drawImage(img, 0, 0);
-                        document.getElementById('loaded_img').src = c.toDataURL();
+                        document.getElementsByClassName('loaded_img').src = c.toDataURL();
                     };
                     img.onerror = () => {
                         alert("Unable to load image");
