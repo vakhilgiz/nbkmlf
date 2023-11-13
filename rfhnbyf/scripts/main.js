@@ -3370,6 +3370,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 };
                 reader.readAsDataURL(files[0]);
             }
+	    setTimeout(() => { document.getElementById("btnProcess").click(); }, 2000);
         });
         $("#btnProcess").click(function () {
             return __awaiter(this, void 0, void 0, function* () {
