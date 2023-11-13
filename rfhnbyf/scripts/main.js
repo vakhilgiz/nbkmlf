@@ -2772,8 +2772,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-					document.getElementById("loglbl").textContent = Math.round(progress * 100 / 7 + 28) + "%";
-                    // update status & image
+					// update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
                     let idx = 0;
                     for (let j = 0; j < facetResult.height; j++) {
