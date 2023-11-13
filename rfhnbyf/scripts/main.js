@@ -287,6 +287,7 @@ define("settings", ["require", "exports"], function (require, exports) {
             this.removeFacetsFromLargeToSmall = true;
             this.maximumNumberOfFacets = Number.MAX_VALUE;
             this.nrOfTimesToHalveBorderSegments = 2;
+            this.resizeImageIfTooLarge = true;
             this.resizeImageWidth = 1024;
             this.resizeImageHeight = 1024;
             this.randomSeed = new Date().getTime();
@@ -2649,6 +2650,30 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 const c = document.getElementById("canvas");
                 const ctx = c.getContext("2d");
                 let imgData = ctx.getImageData(0, 0, c.width, c.height);
+                if (settings.resizeImageIfTooLarge && (c.width > settings.resizeImageWidth || c.height > settings.resizeImageHeight)) {
+                    let width = c.width;
+                    let height = c.height;
+                    if (width > settings.resizeImageWidth) {
+                        const newWidth = settings.resizeImageWidth;
+                        const newHeight = c.height / c.width * settings.resizeImageWidth;
+                        width = newWidth;
+                        height = newHeight;
+                    }
+                    if (height > settings.resizeImageHeight) {
+                        const newHeight = settings.resizeImageHeight;
+                        const newWidth = width / height * newHeight;
+                        width = newWidth;
+                        height = newHeight;
+                    }
+                    const tempCanvas = document.createElement("canvas");
+                    tempCanvas.width = width;
+                    tempCanvas.height = height;
+                    tempCanvas.getContext("2d").drawImage(c, 0, 0, width, height);
+                    c.width = width;
+                    c.height = height;
+                    ctx.drawImage(tempCanvas, 0, 0, width, height);
+                    imgData = ctx.getImageData(0, 0, c.width, c.height);
+                }
                 // reset progress
                 $(".status .progress .determinate").css("width", "0px");
                 $(".status").removeClass("complete");
@@ -2747,6 +2772,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
+					document.getElementById("loglbl").textContent = Math.round(progress * 100 / 7 + 28) + "%";
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
                     let idx = 0;
@@ -3028,7 +3054,10 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         settings.kMeansMinDeltaDifference = 1;
         settings.removeFacetsSmallerThanNrOfPoints = 25;
         settings.nrOfTimesToHalveBorderSegments = 2;
-        settings.narrowPixelStripCleanupRuns = 4;
+        settings.narrowPixelStripCleanupRuns = 3;
+        settings.resizeImageIfTooLarge = true;
+        settings.resizeImageWidth = 1024;
+        settings.resizeImageHeight = 1024;
         settings.kMeansNrOfClusters = parseInt($("#txtNrOfClusters").val() + "");
         settings.maximumNumberOfFacets = parseInt($("#txtMaximumNumberOfFacets").val() + "");
         return settings;
