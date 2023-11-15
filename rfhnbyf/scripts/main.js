@@ -2886,6 +2886,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.facetLabelPlacement").addClass("complete");
                 gui_1.timeEnd("Facet label placement");
+		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cLabelPlacement").toDataURL()})`;
             });
         }
         /**
