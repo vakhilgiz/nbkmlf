@@ -2790,7 +2790,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.facetReduction").addClass("complete");
                 gui_1.timeEnd("Facet reduction");
-                document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = 'url(${document.getElementById("cReduction").toDataURL()})';
+                document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cReduction").toDataURL()})`;
             });
         }
         static processFacetBorderTracing(facetResult, cancellationToken) {
