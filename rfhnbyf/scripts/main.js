@@ -2737,7 +2737,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.kMeans").addClass("complete");
                 gui_1.timeEnd("K-means clustering");
-		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = document.getElementById("cKMeans").toDataURL();
+		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].img = document.getElementById("cKMeans").toDataURL();
                 return kmeansImgData;
             });
         }
