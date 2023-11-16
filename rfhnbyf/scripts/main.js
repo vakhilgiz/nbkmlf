@@ -2807,7 +2807,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     }
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 42) + "%");
-                    ctxBorderPath.fillStyle = "red";
+                    ctxBorderPath.fillStyle = "white";
                     ctxBorderPath.fillRect(0, 0, cBorderPath.width, cBorderPath.height);
                     for (const f of facetResult.facets) {
                         if (f != null && f.borderPath != null) {
@@ -2839,7 +2839,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     }
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 56) + "%");
-                    ctxBorderSegment.fillStyle = "white";
+                    ctxBorderSegment.fillStyle = "red";
                     ctxBorderSegment.fillRect(0, 0, cBorderSegment.width, cBorderSegment.height);
                     for (const f of facetResult.facets) {
                         if (f != null && progress > f.id / facetResult.facets.length) {
