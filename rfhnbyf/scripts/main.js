@@ -2839,7 +2839,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     }
                     // update status & image
                     $("#statusMain").css("width", Math.round(progress * 100 / 7 + 56) + "%");
-                    ctxBorderSegment.fillStyle = "red";
+                    //ctxBorderSegment.fillStyle = "red";
                     ctxBorderSegment.fillRect(0, 0, cBorderSegment.width, cBorderSegment.height);
                     for (const f of facetResult.facets) {
                         if (f != null && progress > f.id / facetResult.facets.length) {
