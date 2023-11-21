@@ -2795,7 +2795,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status.facetReduction").addClass("complete");
                 gui_1.timeEnd("Facet reduction");
                 document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cReduction").toDataURL()})`;
-            });
+	        document.getElementById("first_diff_img").src = document.getElementById("cReduction").toDataURL();
+	    });
         }
         static processFacetBorderTracing(facetResult, cancellationToken) {
             return __awaiter(this, void 0, void 0, function* () {
@@ -2864,7 +2865,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status.facetBorderSegmentation").addClass("complete");
                 gui_1.timeEnd("Facet border segmentation");
 		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cBorderSegmentation").toDataURL()})`;
-                return cBorderSegment;
+                document.getElementById("second_diff_img").src = document.getElementById("cBorderSegmentation").toDataURL();
+		return cBorderSegment;
             });
         }
         static processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken) {
