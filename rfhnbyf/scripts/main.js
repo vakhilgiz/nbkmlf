@@ -2715,6 +2715,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
         }
         static processKmeansClustering(imgData, ctx, settings, cancellationToken) {
             return __awaiter(this, void 0, void 0, function* () {
+		document.getElementsByClassName('bStart')[0].getElementsByClassName('tn-atom')[0].textContent = 'Подождите...';
                 gui_1.time("K-means clustering");
                 const cKmeans = document.getElementById("cKMeans");
                 cKmeans.width = imgData.width;
@@ -3110,6 +3111,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
 		document.getElementsByClassName('statusMain')[0].style.width = '0px';
+		document.getElementsByClassName('bStart')[0].getElementsByClassName('tn-atom')[0].textContent = 'Готово';
             }
         });
     }
