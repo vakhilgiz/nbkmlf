@@ -2726,7 +2726,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status.kMeans").addClass("active");
                 yield colorreductionmanagement_2.ColorReducer.applyKMeansClustering(imgData, kmeansImgData, ctx, settings, (kmeans) => {
                     const progress = (100 - (kmeans.currentDeltaDistanceDifference > 100 ? 100 : kmeans.currentDeltaDistanceDifference)) / 100;
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7) + "%");
+		    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7) + 'px';
                     ctxKmeans.putImageData(kmeansImgData, 0, 0);
                     console.log(kmeans.currentDeltaDistanceDifference);
                     if (cancellationToken.isCancelled) {
@@ -2749,7 +2750,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 14) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 14) + "%");
+		    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 14) + 'px';
                 });
                 $(".status").removeClass("active");
                 $(".status.facetBuilding").addClass("complete");
@@ -2773,7 +2775,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
 					// update status & image
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
+                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 28) + 'px';
                     let idx = 0;
                     for (let j = 0; j < facetResult.height; j++) {
                         for (let i = 0; i < facetResult.width; i++) {
@@ -2806,7 +2809,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 42) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 42) + "%");
+                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 42) + 'px';
                     ctxBorderPath.fillStyle = "white";
                     ctxBorderPath.fillRect(0, 0, cBorderPath.width, cBorderPath.height);
                     for (const f of facetResult.facets) {
@@ -2838,7 +2842,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 56) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 56) + "%");
+                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 56) + 'px';
                     //ctxBorderSegment.fillStyle = "white";
                     //ctxBorderSegment.fillRect(0, 0, cBorderSegment.width, cBorderSegment.height);
                     ctxBorderSegment.strokeRect(0, 0, cBorderSegment.width, cBorderSegment.height);
@@ -2877,7 +2882,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 70) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 70) + "%");
+                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 70) + 'px';
                     for (const f of facetResult.facets) {
                         if (f != null && f.labelBounds != null) {
                             ctxLabelPlacement.fillStyle = "red";
@@ -3095,13 +3101,15 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    $("#statusMain").css("width", Math.round(progress * 100 / 7 + 86) + "%");
+                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 86) + "%");
+	            document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
                 $("#palette .color").tooltip();
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
+		document.getElementsByClassName('statusMain')[0].style.width = '0px';
             }
         });
     }
