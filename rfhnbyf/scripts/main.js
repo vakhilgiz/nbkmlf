@@ -2687,7 +2687,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 colormapResult = colorreductionmanagement_2.ColorReducer.createColorMap(kmeansImgData);
                 if (settings.narrowPixelStripCleanupRuns === 0) {
                     // facet building
-                    facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken);
+                    facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken, settings);
                     // facet reduction
                     yield GUIProcessManager.processFacetReduction(facetResult, settings, colormapResult, cancellationToken);
                 }
@@ -2696,7 +2696,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         // clean up narrow pixel strips
                         yield colorreductionmanagement_2.ColorReducer.processNarrowPixelStripCleanup(colormapResult);
                         // facet building
-                        facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken);
+                        facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken, settings);
                         // facet reduction
                         yield GUIProcessManager.processFacetReduction(facetResult, settings, colormapResult, cancellationToken);
                         // the colormapResult.imgColorIndices get updated as the facets are reduced, so just do a few runs of pixel cleanup
@@ -2751,7 +2751,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 return kmeansImgData;
             });
         }
-        static processFacetBuilding(colormapResult, cancellationToken) {
+        static processFacetBuilding(colormapResult, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet building");
                 $(".status.facetBuilding").addClass("active");
