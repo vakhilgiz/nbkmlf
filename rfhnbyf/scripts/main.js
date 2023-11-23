@@ -3122,6 +3122,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 $(".status.SVGGenerate").addClass("complete");
 		v_statusBar.style.width = '0px';
 		v_statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово      ';
+		v_statusButton.getElementsByClassName('tn-atom')[0].style.borderColor = '#00FE52';
             }
         });
     }
