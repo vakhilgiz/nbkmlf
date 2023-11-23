@@ -2687,7 +2687,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 colormapResult = colorreductionmanagement_2.ColorReducer.createColorMap(kmeansImgData);
                 if (settings.narrowPixelStripCleanupRuns === 0) {
                     // facet building
-                    facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken);
+                    facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken, settings);
                     // facet reduction
                     yield GUIProcessManager.processFacetReduction(facetResult, settings, colormapResult, cancellationToken);
                 }
@@ -2696,18 +2696,18 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         // clean up narrow pixel strips
                         yield colorreductionmanagement_2.ColorReducer.processNarrowPixelStripCleanup(colormapResult);
                         // facet building
-                        facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken);
+                        facetResult = yield GUIProcessManager.processFacetBuilding(colormapResult, cancellationToken, settings);
                         // facet reduction
                         yield GUIProcessManager.processFacetReduction(facetResult, settings, colormapResult, cancellationToken);
                         // the colormapResult.imgColorIndices get updated as the facets are reduced, so just do a few runs of pixel cleanup
                     }
                 }
                 // facet border tracing
-                yield GUIProcessManager.processFacetBorderTracing(facetResult, cancellationToken);
+                yield GUIProcessManager.processFacetBorderTracing(facetResult, cancellationToken, settings);
                 // facet border segmentation
                 const cBorderSegment = yield GUIProcessManager.processFacetBorderSegmentation(facetResult, settings, cancellationToken);
                 // facet label placement
-                yield GUIProcessManager.processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken);
+                yield GUIProcessManager.processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken, settings);
                 // everything is now ready to generate the SVG, return the result
                 const processResult = new ProcessResult();
                 processResult.facetResult = facetResult;
@@ -2751,7 +2751,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 return kmeansImgData;
             });
         }
-        static processFacetBuilding(colormapResult, cancellationToken) {
+        static processFacetBuilding(colormapResult, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet building");
                 $(".status.facetBuilding").addClass("active");
@@ -2767,7 +2767,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 return facetResult;
             });
         }
-        static processFacetReduction(facetResult, settings, colormapResult, cancellationToken) {
+        static processFacetReduction(facetResult, settings, colormapResult, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet reduction");
                 const cReduction = document.getElementById("cReduction");
@@ -2804,7 +2804,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
 	        document.getElementById("first_diff_img").src = document.getElementById("cReduction").toDataURL();
 	    });
         }
-        static processFacetBorderTracing(facetResult, cancellationToken) {
+        static processFacetBorderTracing(facetResult, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet border tracing");
                 const cBorderPath = document.getElementById("cBorderPath");
@@ -2873,7 +2873,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
 		return cBorderSegment;
             });
         }
-        static processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken) {
+        static processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet label placement");
                 const cLabelPlacement = document.getElementById("cLabelPlacement");
@@ -3101,21 +3101,29 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const sizeMultiplier = 3;
                 const fontSize = 50;
                 const fontColor = "#000";
+		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+                  var v_statusBar = document.getElementsByClassName('statusA3')[0];
+		  var v_statusButton = document.getElementsByClassName('bA3')[0];
+                }
+		else {
+                  var v_statusBar = document.getElementsByClassName('statusA4')[0];
+		  var v_statusButton = document.getElementsByClassName('bA4')[0];
+		}
                 $(".status.SVGGenerate").removeClass("complete");
                 $(".status.SVGGenerate").addClass("active");
                 const svg = yield guiprocessmanager_1.GUIProcessManager.createSVG(processResult.facetResult, processResult.colorsByIndex, sizeMultiplier, fill, stroke, showLabels, fontSize, fontColor, (progress) => {
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
+                    v_statusBar.style.width = v_statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
                 $("#palette .color").tooltip();
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
-		settings.statusBar.style.width = '0px';
-		settings.statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово';
+		v_statusBar.style.width = '0px';
+		v_statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово      ';
             }
         });
     }
