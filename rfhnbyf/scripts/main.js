@@ -2703,7 +2703,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     }
                 }
                 // facet border tracing
-                yield GUIProcessManager.processFacetBorderTracing(facetResult, cancellationToken);
+                yield GUIProcessManager.processFacetBorderTracing(facetResult, cancellationToken, settings);
                 // facet border segmentation
                 const cBorderSegment = yield GUIProcessManager.processFacetBorderSegmentation(facetResult, settings, cancellationToken);
                 // facet label placement
@@ -2804,7 +2804,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
 	        document.getElementById("first_diff_img").src = document.getElementById("cReduction").toDataURL();
 	    });
         }
-        static processFacetBorderTracing(facetResult, cancellationToken) {
+        static processFacetBorderTracing(facetResult, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet border tracing");
                 const cBorderPath = document.getElementById("cBorderPath");
