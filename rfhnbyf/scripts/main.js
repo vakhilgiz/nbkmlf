@@ -2707,7 +2707,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 // facet border segmentation
                 const cBorderSegment = yield GUIProcessManager.processFacetBorderSegmentation(facetResult, settings, cancellationToken);
                 // facet label placement
-                yield GUIProcessManager.processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken);
+                yield GUIProcessManager.processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken, settings);
                 // everything is now ready to generate the SVG, return the result
                 const processResult = new ProcessResult();
                 processResult.facetResult = facetResult;
@@ -2873,7 +2873,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
 		return cBorderSegment;
             });
         }
-        static processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken) {
+        static processFacetLabelPlacement(facetResult, cBorderSegment, cancellationToken, settings) {
             return __awaiter(this, void 0, void 0, function* () {
                 gui_1.time("Facet label placement");
                 const cLabelPlacement = document.getElementById("cLabelPlacement");
