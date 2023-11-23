@@ -3101,21 +3101,27 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const sizeMultiplier = 3;
                 const fontSize = 50;
                 const fontColor = "#000";
+		var v_statusBar = document.getElementsByClassName('statusA4')[0];
+		var v_statusButton = document.getElementsByClassName('bA4')[0];
+		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+                  v_statusBar = document.getElementsByClassName('statusA3')[0];
+		  v_statusButton = document.getElementsByClassName('bA3')[0];
+                }
                 $(".status.SVGGenerate").removeClass("complete");
                 $(".status.SVGGenerate").addClass("active");
                 const svg = yield guiprocessmanager_1.GUIProcessManager.createSVG(processResult.facetResult, processResult.colorsByIndex, sizeMultiplier, fill, stroke, showLabels, fontSize, fontColor, (progress) => {
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
+                    v_statusBar.style.width = v_statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
                 $("#palette .color").tooltip();
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
-		settings.statusBar.style.width = '0px';
-		settings.statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово      ';
+		v_statusBar.style.width = '0px';
+		v_statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово      ';
             }
         });
     }
