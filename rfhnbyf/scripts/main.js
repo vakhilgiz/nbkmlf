@@ -291,6 +291,8 @@ define("settings", ["require", "exports"], function (require, exports) {
             this.resizeImageWidth = 1024;
             this.resizeImageHeight = 1024;
             this.randomSeed = new Date().getTime();
+	    this.statusBar = document.getElementsByClassName('statusA3')[0];
+	    this.statusButton = document.getElementsByClassName('statusA3')[0];
         }
     }
     exports.Settings = Settings;
@@ -2715,7 +2717,14 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
         }
         static processKmeansClustering(imgData, ctx, settings, cancellationToken) {
             return __awaiter(this, void 0, void 0, function* () {
-		document.getElementsByClassName('bStart')[0].getElementsByClassName('tn-atom')[0].textContent = 'Подождите...';
+		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+                  settings.statusBar = document.getElementsByClassName('statusA3')[0];
+		  settings.statusButton = document.getElementsByClassName('bA3')[0];
+                }
+		else {
+                  settings.statusBar = document.getElementsByClassName('statusA4')[0];
+		  settings.statusButton = document.getElementsByClassName('bA4')[0];
+		}
                 gui_1.time("K-means clustering");
                 const cKmeans = document.getElementById("cKMeans");
                 cKmeans.width = imgData.width;
@@ -2727,8 +2736,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status.kMeans").addClass("active");
                 yield colorreductionmanagement_2.ColorReducer.applyKMeansClustering(imgData, kmeansImgData, ctx, settings, (kmeans) => {
                     const progress = (100 - (kmeans.currentDeltaDistanceDifference > 100 ? 100 : kmeans.currentDeltaDistanceDifference)) / 100;
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7) + "%");
-		    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7) + 'px';
+		    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7) + 'px';
                     ctxKmeans.putImageData(kmeansImgData, 0, 0);
                     console.log(kmeans.currentDeltaDistanceDifference);
                     if (cancellationToken.isCancelled) {
@@ -2751,8 +2759,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 14) + "%");
-		    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 14) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 14) + 'px';
                 });
                 $(".status").removeClass("active");
                 $(".status.facetBuilding").addClass("complete");
@@ -2776,8 +2783,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
 					// update status & image
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 28) + "%");
-                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 28) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 28) + 'px';
                     let idx = 0;
                     for (let j = 0; j < facetResult.height; j++) {
                         for (let i = 0; i < facetResult.width; i++) {
@@ -2811,8 +2817,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 42) + "%");
-                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 42) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 42) + 'px';
                     ctxBorderPath.fillStyle = "white";
                     ctxBorderPath.fillRect(0, 0, cBorderPath.width, cBorderPath.height);
                     for (const f of facetResult.facets) {
@@ -2844,8 +2849,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 56) + "%");
-                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 56) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 56) + 'px';
                     //ctxBorderSegment.fillStyle = "white";
                     //ctxBorderSegment.fillRect(0, 0, cBorderSegment.width, cBorderSegment.height);
                     ctxBorderSegment.strokeRect(0, 0, cBorderSegment.width, cBorderSegment.height);
@@ -2885,8 +2889,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         throw new Error("Cancelled");
                     }
                     // update status & image
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 70) + "%");
-                    document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 70) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 70) + 'px';
                     for (const f of facetResult.facets) {
                         if (f != null && f.labelBounds != null) {
                             ctxLabelPlacement.fillStyle = "red";
@@ -3104,16 +3107,15 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
-                    //$("#statusMain").css("width", Math.round(progress * 100 / 7 + 86) + "%");
-	            document.getElementsByClassName('statusMain')[0].style.width = document.getElementsByClassName('bStart')[0].offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
+                    settings.statusBar.style.width = settings.statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
                 $("#palette .color").tooltip();
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
-		document.getElementsByClassName('statusMain')[0].style.width = '0px';
-		document.getElementsByClassName('bStart')[0].getElementsByClassName('tn-atom')[0].textContent = 'Готово';
+		settings.statusBar.style.width = '0px';
+		settings.statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово';
             }
         });
     }
