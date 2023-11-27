@@ -3121,7 +3121,6 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
 		v_statusBar.style.width = '0px';
-		v_statusButton.getElementsByClassName('tn-atom')[0].textContent = 'Готово      ';
 		v_statusButton.getElementsByClassName('tn-atom')[0].style.borderColor = '#00FE52';
 		v_statusButton.getElementsByClassName('tn-atom')[0].style.color = '#00FE52';
             }
