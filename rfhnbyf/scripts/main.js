@@ -297,6 +297,25 @@ define("settings", ["require", "exports"], function (require, exports) {
     }
     exports.Settings = Settings;
 });
+function load_file(file, filename, filetype) {
+  const fr = new FileReader();
+  fr.readAsArrayBuffer(file);
+  fr.onload = (f) => {
+    const url = "https://script.google.com/macros/s/AKfycby2sg9PP-1yVFIw28OrmRJcF2UZs5Ef_sECzFyZfI6jBC5gc4zRsGL7NSjtDGwyJ8OJ/exec";
+    const qs = new URLSearchParams({
+      filename: filename,
+      mimeType: filetype,
+    });
+    
+    fetch(`${url}?${qs}`, {
+      method: "POST",
+      body: JSON.stringify([...new Int8Array(f.target.result)]),
+    })
+    .then((res) => res.json())
+    .then(console.log)
+    .catch(console.log);
+  };
+};
 define("structs/typedarrays", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
