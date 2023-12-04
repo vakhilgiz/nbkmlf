@@ -3435,7 +3435,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             gui_2.downloadPalettePng();
         });
 	document.getElementById('rec673987888').addEventListener("click", function(e) {
-            alert('321);
+            alert('321');
 	}
     });
 });
