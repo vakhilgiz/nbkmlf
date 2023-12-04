@@ -3432,7 +3432,8 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         $("#btnDownloadPalettePNG").click(function () {
             gui_2.downloadPalettePng();
         });
-	$("#canvas").click(function () {
+	$("#canvas").click(function (e) {
+	    e.preventDefault();
             alert('321321');
 	});
     });
