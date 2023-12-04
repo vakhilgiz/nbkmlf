@@ -3057,6 +3057,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let processResult = null;
     let cancellationToken = new common_8.CancellationToken();
     let fileOriginal = null;
+    let filePath = null;
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3140,6 +3141,13 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 $("#palette .color").tooltip();
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
+		    
+                const svgEl = $("#svgContainer svg").get(0);
+                svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                const svgData = svgEl.outerHTML;
+                const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+                filePath = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+		
 		v_statusBar.style.width = '0px';
 		v_statusButton.getElementsByClassName('tn-atom')[0].style.borderColor = '#00FE52';
 		v_statusButton.getElementsByClassName('tn-atom')[0].style.color = '#00FE52';
