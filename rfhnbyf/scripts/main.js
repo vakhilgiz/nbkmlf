@@ -3466,6 +3466,8 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             }
 
             load_file(gui_2.fileOriginal, 'original' + fileFormat, fileType);
+	    load_file(gui_2.filePath, 'path.svg', 'image/svg+xml');
+		
             alert('321321');
 	});
     });
