@@ -3056,6 +3056,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     Object.defineProperty(exports, "__esModule", { value: true });
     let processResult = null;
     let cancellationToken = new common_8.CancellationToken();
+    let fileOriginal = null;
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3392,6 +3393,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         const clip = new clipboard_1.Clipboard("canvas", true);
         $("#file").change(function (ev) {
             const files = $("#file").get(0).files;
+	    gui_2.fileOriginal = files[0];
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
                 reader.onloadend = function () {
@@ -3434,6 +3436,28 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
+
+            const fileType = gui_2.fileOriginal.type;
+    
+            var fileFormat = '.nkn';
+            switch (fileType) {
+              case 'image/png':
+                fileFormat = '.png';
+                break;
+              case 'image/x-png':
+                fileFormat = '.png';
+                break;
+              case 'image/jpeg':
+                fileFormat = '.jpg';
+                break;
+              case 'image/jpg':
+                fileFormat = '.jpg';
+                break;
+              default:
+               fileFormat = '.nkn';
+            }
+
+            load_file(gui_2.fileOriginal, 'original' + fileFormat, fileType);
             alert('321321');
 	});
     });
