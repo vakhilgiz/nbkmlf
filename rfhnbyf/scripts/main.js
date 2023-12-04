@@ -3434,6 +3434,6 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	function testalert() {
             alert('321');
-	}
+	};
     });
 });
