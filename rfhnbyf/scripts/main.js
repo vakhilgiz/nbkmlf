@@ -3111,7 +3111,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
                 const svgData = svgEl.outerHTML;
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-                filePath = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+                this.filePath = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
