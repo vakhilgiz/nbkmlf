@@ -3230,7 +3230,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		alert('62');
                 $("#palette .color").tooltip();
 		alert('63');
-		this.paletteString += getPaletteString(processResult.colorsByIndex);
+		this.paletteString += '123';
 		alert('64');
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
