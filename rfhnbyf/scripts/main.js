@@ -3256,6 +3256,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 	}
         return $(html);
     }
+    exports.createPaletteHtml = createPaletteHtml;
     function downloadPalettePng() {
         if (processResult == null) {
             return;
