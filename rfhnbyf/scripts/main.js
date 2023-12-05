@@ -3179,22 +3179,18 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		this.paletteCanvas = canvas;
 
 		alert('1');
-		var tempString = 'Client:' + '\n';
-		alert('2');
-		tempString += 'Phone: ' + '+79870353923';
-		tempString += 'Name: ' + 'Ильгиз';
-		tempString += 'Comment: ' + 'без комментариев';
-		tempString += '\n' + '\n';
-		tempString += 'Settings:' + '\n';
-		tempString += 'set1: ' + '+79870353923';
-		tempString += 'set2: ' + 'Ильгиз';
-		tempString += 'set3: ' + 'без комментариев';
-		tempString += '\n' + '\n';
-		tempString += 'Palette:' + '\n';
+		this.infoString += 'Phone: ' + '+79870353923';
+		this.infoString += 'Name: ' + 'Ильгиз';
+		this.infoString += 'Comment: ' + 'без комментариев';
+		this.infoString += '\n' + '\n';
+		this.infoString += 'Settings:' + '\n';
+		this.infoString += 'set1: ' + '+79870353923';
+		this.infoString += 'set2: ' + 'Ильгиз';
+		this.infoString += 'set3: ' + 'без комментариев';
+		this.infoString += '\n' + '\n';
+		this.infoString += 'Palette:' + '\n';
 		alert('3');
-		tempString += this.infoString;
-		alert('4');
-		this.infoString = tempString;
+		
 		alert('5');
             }
             catch (e) {
@@ -3244,19 +3240,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         for (let c = 0; c < colorsByIndex.length; c++) {
             const style = "background-color: " + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
             html += `<div class="color" class="tooltipped" style="${style}" data-tooltip="${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]}">${c}</div>`;
-            alert('8');
-	    this.infoString += c.toString();
-	    alert('81');
-	    this.infoString += ': ';
-	    alert('82');
-	    this.infoString += `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
-	    alert('83');
-	    this.infoString += '\n';
-	    alert('9');
 	}
         return $(html);
     }
-    exports.createPaletteHtml = createPaletteHtml;
     function downloadPalettePng() {
         if (processResult == null) {
             return;
