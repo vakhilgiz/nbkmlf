@@ -3251,7 +3251,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         for (let c = 0; c < colorsByIndex.length; c++) {
 	    palette_string += c.toString() + ' - ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
         }
-        return palette_string;
+        return $(palette_string);
     }
     function downloadPalettePng() {
         if (processResult == null) {
