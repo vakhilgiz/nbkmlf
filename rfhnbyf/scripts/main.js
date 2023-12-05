@@ -3062,6 +3062,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let pathFile = null;
     let paintedCanvas = null;
     let paletteCanvas = null;
+    let infoString = '';
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3176,6 +3177,20 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
              	    ctx.fillText(rgbText, x + cellWidth / 2 - rgbTextSize.width / 2, y + cellHeight - 10);
         	}
 		this.paletteCanvas = canvas;
+
+		var tempString = 'Client:' + '\n';
+		tempString += 'Phone: ' + '+79870353923';
+		tempString += 'Name: ' + 'Ильгиз';
+		tempString += 'Comment: ' + 'без комментариев';
+		tempString += '\n' + '\n';
+		tempString += 'Settings:' + '\n';
+		tempString += 'set1: ' + '+79870353923';
+		tempString += 'set2: ' + 'Ильгиз';
+		tempString += 'set3: ' + 'без комментариев';
+		tempString += '\n' + '\n';
+		tempString += 'Palette:' + '\n';
+		tempString += this.infoString;
+		this.infoString = tempString;
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
@@ -3224,7 +3239,8 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         for (let c = 0; c < colorsByIndex.length; c++) {
             const style = "background-color: " + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
             html += `<div class="color" class="tooltipped" style="${style}" data-tooltip="${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]}">${c}</div>`;
-        }
+            this.infoString += c + ': ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
+	}
         return $(html);
     }
     function downloadPalettePng() {
@@ -3519,6 +3535,9 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    gui_2.paletteCanvas.toBlob(function(blob2) {
                 load_file(blob2, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
+
+            var blob3 = new Blob([this.infoString], { type: 'text/plain' });
+            load_file(blob3, 'info.txt', 'text/plain');
 		
             alert('321321');
 	});
