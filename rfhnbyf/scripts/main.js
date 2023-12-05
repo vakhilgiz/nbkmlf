@@ -3225,9 +3225,13 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                     v_statusBar.style.width = v_statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
+		alert('61');
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
+		alert('62');
                 $("#palette .color").tooltip();
+		alert('63');
 		this.paletteString += getPaletteString(processResult.colorsByIndex);
+		alert('64');
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
 
@@ -3249,9 +3253,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     function getPaletteString(colorsByIndex) {
         let palette_string = "";
         for (let c = 0; c < colorsByIndex.length; c++) {
-	    alert('4');
+	    alert('8');
 	    palette_string += c.toString() + ' - ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
-	    alert('5');
+	    alert('9');
         }
         return $(palette_string);
     }
