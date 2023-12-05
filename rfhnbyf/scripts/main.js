@@ -3062,8 +3062,8 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let pathFile = null;
     let paintedCanvas = null;
     let paletteCanvas = null;
-    let infoString = '';
-    let paletteString = '';
+    let infoString = null;
+    let paletteString = null;
     const timers = {};
     function time(name) {
         console.time(name);
