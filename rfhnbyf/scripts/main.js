@@ -3469,10 +3469,9 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-
+		
             load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
 	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
-	    load_file(gui_2.paintedFile, 'painted' + gui_2.fileFormat, gui_2.fileType);
 
             gui_2.paintedCanvas.toBlob(function(blob) {
                 load_file(blob, 'painted' + gui_2.fileFormat, gui_2.fileType);
