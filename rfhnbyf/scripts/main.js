@@ -3060,7 +3060,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let fileFormat = null;
     let originalFile = null;
     let pathFile = null;
-    let paintedFile = null;
+    let paintedCanvas = null;
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3136,10 +3136,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
 
-		const canvas = document.getElementById("cReduction");
-		canvas.toBlob(function(blob) {
-		    this.paintedFile = blob;
-                }, this.fileType);
+		this.paintedCanvas = document.getElementById("cReduction");
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
@@ -3476,6 +3473,10 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
 	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
 	    load_file(gui_2.paintedFile, 'painted' + gui_2.fileFormat, gui_2.fileType);
+
+            this.paintedCanvas.toBlob(function(blob) {
+                load_file(blob, 'painted' + gui_2.fileFormat, gui_2.fileType);
+            }, ftype);
 		
             alert('321321');
 	});
