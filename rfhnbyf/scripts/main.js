@@ -3056,8 +3056,11 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     Object.defineProperty(exports, "__esModule", { value: true });
     let processResult = null;
     let cancellationToken = new common_8.CancellationToken();
-    let fileOriginal = null;
-    let filePath = null;
+    let fileType = null;
+    let fileFormat = null;
+    let originalFile = null;
+    let pathFile = null;
+    let paintedFile = null;
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3106,12 +3109,37 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 cancellationToken = new common_8.CancellationToken();
                 processResult = yield guiprocessmanager_1.GUIProcessManager.process(settings, cancellationToken);
                 yield updateOutput();
+
+		this.fileType = this.originalFile.type;
+    
+                this.fileFormat = '.nkn';
+                switch (this.fileType) {
+	            case 'image/png':
+                        this.fileFormat = '.png';
+                        break;
+	            case 'image/x-png':
+                        this.fileFormat = '.png';
+                        break;
+	            case 'image/jpeg':
+                        this.fileFormat = '.jpg';
+                        break;
+	            case 'image/jpg':
+                        this.fileFormat = '.jpg';
+                        break;
+	            default:
+                        this.fileFormat = '.nkn';
+                }
 		
 		const svgEl = $("#svgContainer svg").get(0);
                 svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
                 const svgData = svgEl.outerHTML;
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-                this.filePath = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+                this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+
+		const canvas = document.getElementById("cReduction");
+		canvas.toBlob(function(blob) {
+		    this.paintedFile = blob;
+                }, this.fileType);
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
@@ -3401,7 +3429,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         const clip = new clipboard_1.Clipboard("canvas", true);
         $("#file").change(function (ev) {
             const files = $("#file").get(0).files;
-	    gui_2.fileOriginal = files[0];
+	    gui_2.originalFile = files[0];
             if (files !== null && files.length > 0) {
                 const reader = new FileReader();
                 reader.onloadend = function () {
@@ -3445,28 +3473,9 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
 
-            const fileType = gui_2.fileOriginal.type;
-    
-            var fileFormat = '.nkn';
-            switch (fileType) {
-              case 'image/png':
-                fileFormat = '.png';
-                break;
-              case 'image/x-png':
-                fileFormat = '.png';
-                break;
-              case 'image/jpeg':
-                fileFormat = '.jpg';
-                break;
-              case 'image/jpg':
-                fileFormat = '.jpg';
-                break;
-              default:
-               fileFormat = '.nkn';
-            }
-
-            load_file(gui_2.fileOriginal, 'original' + fileFormat, fileType);
-	    load_file(gui_2.filePath, 'path.svg', 'image/svg+xml');
+            load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
+	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
+	    load_file(gui_2.paintedFile, 'painted' + gui_2.fileFormat, gui_2.fileType);
 		
             alert('321321');
 	});
