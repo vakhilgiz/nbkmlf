@@ -3249,7 +3249,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     function getPaletteString(colorsByIndex) {
         let palette_string = "";
         for (let c = 0; c < colorsByIndex.length; c++) {
+	    alert('4');
 	    palette_string += c.toString() + ' - ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
+	    alert('5');
         }
         return $(palette_string);
     }
