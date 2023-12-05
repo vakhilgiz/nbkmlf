@@ -3245,7 +3245,13 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
             const style = "background-color: " + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
             html += `<div class="color" class="tooltipped" style="${style}" data-tooltip="${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]}">${c}</div>`;
             alert('8');
-	    this.infoString += c + ': ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
+	    this.infoString += c;
+	    alert('81');
+	    this.infoString += ': ';
+	    alert('82');
+	    this.infoString += `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
+	    alert('83');
+	    this.infoString += '\n';
 	    alert('9');
 	}
         return $(html);
