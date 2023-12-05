@@ -3178,22 +3178,24 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         	}
 		this.paletteCanvas = canvas;
 
-		alert('1');
 		this.infoString = 'Client:' + '\n';
-		this.infoString += 'Phone - ' + '+79870353923' + '\n';
-		this.infoString += 'Name - ' + 'Ильгиз' + '\n';
-		this.infoString += 'Comment - ' + 'без комментариев' + '\n';
+		this.infoString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
+		this.infoString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
+		this.infoString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
 		this.infoString += '\n';
 		this.infoString += 'Settings:' + '\n';
-		this.infoString += 'set1 - ' + '+79870353923' + '\n';
-		this.infoString += 'set2 - ' + 'Ильгиз' + '\n';
-		this.infoString += 'set3 - ' + 'без комментариев' + '\n';
+		this.infoString += 'Color count - ' + document.getElementById("txtNrOfClusters").value + '\n';
+		this.infoString += 'Facets count - ' + document.getElementById("txtMaximumNumberOfFacets").value + '\n';
+		document.getElementById("optFacetRemovalLargestToSmallest").value
+		if ($("#optFacetRemovalLargestToSmallest").prop("checked")) {
+                    this.infoString += 'Facets order - from large to small' + '\n';
+                }
+                else {
+                    this.infoString += 'Facets order - from small to large' + '\n';
+                }
 		this.infoString += '\n';
 		this.infoString += 'Palette:' + '\n';
 		this.infoString += document.getElementById("palette").outerHTML;
-		alert('3');
-		
-		alert('5');
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
@@ -3540,8 +3542,6 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 
             var infoBlob = new Blob([gui_2.infoString], { type: 'text/plain' });
             load_file(infoBlob, 'info.txt', 'text/plain');
-		
-            alert('321321');
 	});
     });
 });
