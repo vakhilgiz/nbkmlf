@@ -3538,7 +3538,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 load_file(blob2, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-            var blob3 = new Blob([this.infoString], { type: 'text/plain' });
+            var blob3 = new Blob([gui_2.infoString], { type: 'text/plain' });
             load_file(blob3, 'info.txt', 'text/plain');
 		
             alert('321321');
