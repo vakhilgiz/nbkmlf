@@ -3177,11 +3177,11 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
              	    ctx.fillText(rgbText, x + cellWidth / 2 - rgbTextSize.width / 2, y + cellHeight - 10);
         	}
 		this.paletteCanvas = canvas;
-                alert($("input_1402215261581").value);
+                alert(document.getElementById("input_1402215261581").value);
 		this.infoString = 'Client:' + '\n';
-		this.infoString += 'Phone - ' + $("input_1402215261581").value + '\n';
-		this.infoString += 'Name - ' + $("input_1402215261582").value + '\n';
-		this.infoString += 'Comment - ' + $("input_1701192249945").value + '\n';
+		this.infoString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
+		this.infoString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
+		this.infoString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
 		this.infoString += '\n';
 		this.infoString += 'Settings:' + '\n';
 		this.infoString += 'Color count - ' + document.getElementById("txtNrOfClusters").value + '\n';
