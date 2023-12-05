@@ -3062,7 +3062,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let pathFile = null;
     let paintedCanvas = null;
     let paletteCanvas = null;
-    let infoString = null;
+    let infoString = '';
     const timers = {};
     function time(name) {
         console.time(name);
