@@ -3178,7 +3178,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         	}
 		this.paletteCanvas = canvas;
 
+		alert('1');
 		var tempString = 'Client:' + '\n';
+		alert('2');
 		tempString += 'Phone: ' + '+79870353923';
 		tempString += 'Name: ' + 'Ильгиз';
 		tempString += 'Comment: ' + 'без комментариев';
@@ -3189,8 +3191,11 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		tempString += 'set3: ' + 'без комментариев';
 		tempString += '\n' + '\n';
 		tempString += 'Palette:' + '\n';
+		alert('3');
 		tempString += this.infoString;
+		alert('4');
 		this.infoString = tempString;
+		alert('5');
             }
             catch (e) {
                 log("Error: " + e.message + " at " + e.stack);
@@ -3239,7 +3244,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         for (let c = 0; c < colorsByIndex.length; c++) {
             const style = "background-color: " + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})`;
             html += `<div class="color" class="tooltipped" style="${style}" data-tooltip="${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]}">${c}</div>`;
-            this.infoString += c + ': ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
+            alert('8');
+	    this.infoString += c + ': ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
+	    alert('9');
 	}
         return $(html);
     }
