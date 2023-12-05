@@ -3177,13 +3177,8 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
              	    ctx.fillText(rgbText, x + cellWidth / 2 - rgbTextSize.width / 2, y + cellHeight - 10);
         	}
 		this.paletteCanvas = canvas;
-                alert(document.getElementById("input_1402215261581").value);
-		this.infoString = 'Client:' + '\n';
-		this.infoString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
-		this.infoString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
-		this.infoString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
-		this.infoString += '\n';
-		this.infoString += 'Settings:' + '\n';
+
+		this.infoString = 'Settings:' + '\n';
 		this.infoString += 'Color count - ' + document.getElementById("txtNrOfClusters").value + '\n';
 		this.infoString += 'Facets count - ' + document.getElementById("txtMaximumNumberOfFacets").value + '\n';
 		if ($("#optFacetRemovalLargestToSmallest").prop("checked")) {
@@ -3539,7 +3534,13 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-            var infoBlob = new Blob([gui_2.infoString], { type: 'text/plain' });
+	    var tempString = 'Client:' + '\n';
+	    tempString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
+	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
+	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
+	    tempString += '\n';
+	    tempString += gui_2.infoString;
+            var infoBlob = new Blob([tempString], { type: 'text/plain' });
             load_file(infoBlob, 'info.txt', 'text/plain');
 	});
     });
