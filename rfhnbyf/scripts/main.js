@@ -3179,17 +3179,16 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		this.paletteCanvas = canvas;
 
 		alert('1');
-		this.infoString = '';
-		this.infoString += '3232';
-		this.infoString += 'Phone: ' + '+79870353923';
-		this.infoString += 'Name: ' + 'Ильгиз';
-		this.infoString += 'Comment: ' + 'без комментариев';
-		this.infoString += '\n' + '\n';
+		this.infoString = 'Client:' + '\n';
+		this.infoString += 'Phone - ' + '+79870353923' + '\n';
+		this.infoString += 'Name - ' + 'Ильгиз' + '\n';
+		this.infoString += 'Comment - ' + 'без комментариев' + '\n';
+		this.infoString += '\n';
 		this.infoString += 'Settings:' + '\n';
-		this.infoString += 'set1: ' + '+79870353923';
-		this.infoString += 'set2: ' + 'Ильгиз';
-		this.infoString += 'set3: ' + 'без комментариев';
-		this.infoString += '\n' + '\n';
+		this.infoString += 'set1 - ' + '+79870353923' + '\n';
+		this.infoString += 'set2 - ' + 'Ильгиз' + '\n';
+		this.infoString += 'set3 - ' + 'без комментариев' + '\n';
+		this.infoString += '\n';
 		this.infoString += 'Palette:' + '\n';
 		this.infoString += document.getElementById("palette").outerHTML;
 		alert('3');
@@ -3531,16 +3530,16 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
 	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
 
-            gui_2.paintedCanvas.toBlob(function(blob) {
-                load_file(blob, 'painted' + gui_2.fileFormat, gui_2.fileType);
+            gui_2.paintedCanvas.toBlob(function(paintedBlob) {
+                load_file(paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-	    gui_2.paletteCanvas.toBlob(function(blob2) {
-                load_file(blob2, 'palette' + gui_2.fileFormat, gui_2.fileType);
+	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
+                load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-            var blob3 = new Blob([gui_2.infoString], { type: 'text/plain' });
-            load_file(blob3, 'info.txt', 'text/plain');
+            var infoBlob = new Blob([gui_2.infoString], { type: 'text/plain' });
+            load_file(infoBlob, 'info.txt', 'text/plain');
 		
             alert('321321');
 	});
