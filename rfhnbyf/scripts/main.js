@@ -3179,18 +3179,19 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		this.paletteCanvas = canvas;
 
 		alert('1');
+		this.infoString = '';
 		this.infoString += '3232';
-		//this.infoString += 'Phone: ' + '+79870353923';
-		//this.infoString += 'Name: ' + 'Ильгиз';
-		//this.infoString += 'Comment: ' + 'без комментариев';
-		//this.infoString += '\n' + '\n';
-		//this.infoString += 'Settings:' + '\n';
-		//this.infoString += 'set1: ' + '+79870353923';
-		//this.infoString += 'set2: ' + 'Ильгиз';
-		//this.infoString += 'set3: ' + 'без комментариев';
-		//this.infoString += '\n' + '\n';
-		//this.infoString += 'Palette:' + '\n';
-		//this.infoString += document.getElementById("palette").outerHTML;
+		this.infoString += 'Phone: ' + '+79870353923';
+		this.infoString += 'Name: ' + 'Ильгиз';
+		this.infoString += 'Comment: ' + 'без комментариев';
+		this.infoString += '\n' + '\n';
+		this.infoString += 'Settings:' + '\n';
+		this.infoString += 'set1: ' + '+79870353923';
+		this.infoString += 'set2: ' + 'Ильгиз';
+		this.infoString += 'set3: ' + 'без комментариев';
+		this.infoString += '\n' + '\n';
+		this.infoString += 'Palette:' + '\n';
+		this.infoString += document.getElementById("palette").outerHTML;
 		alert('3');
 		
 		alert('5');
