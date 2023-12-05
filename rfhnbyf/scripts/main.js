@@ -3063,7 +3063,6 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
     let paintedCanvas = null;
     let paletteCanvas = null;
     let infoString = null;
-    let paletteString = null;
     const timers = {};
     function time(name) {
         console.time(name);
@@ -3190,7 +3189,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		this.infoString += 'set3: ' + 'без комментариев';
 		this.infoString += '\n' + '\n';
 		this.infoString += 'Palette:' + '\n';
-		this.infoString += this.paletteString;
+		this.infoString += document.getElementById("palette").outerHTML;
 		alert('3');
 		
 		alert('5');
@@ -3225,13 +3224,8 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                     v_statusBar.style.width = v_statusButton.offsetWidth / 100 * Math.round(progress * 100 / 7 + 86) + 'px';
                 });
                 $("#svgContainer").empty().append(svg);
-		alert('61');
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
-		alert('62');
                 $("#palette .color").tooltip();
-		alert(this.paletteString);
-		this.paletteString = '123';
-		alert('64');
                 $(".status").removeClass("active");
                 $(".status.SVGGenerate").addClass("complete");
 
@@ -3249,15 +3243,6 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
             html += `<div class="color" class="tooltipped" style="${style}" data-tooltip="${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]}">${c}</div>`;
 	}
         return $(html);
-    }
-    function getPaletteString(colorsByIndex) {
-        let palette_string = "";
-        for (let c = 0; c < colorsByIndex.length; c++) {
-	    alert('8');
-	    palette_string += c.toString() + ' - ' + `rgb(${colorsByIndex[c][0]},${colorsByIndex[c][1]},${colorsByIndex[c][2]})` + '\n';
-	    alert('9');
-        }
-        return $(palette_string);
     }
     function downloadPalettePng() {
         if (processResult == null) {
