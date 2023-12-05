@@ -3476,7 +3476,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 
             gui_2.paintedCanvas.toBlob(function(blob) {
                 load_file(blob, 'painted' + gui_2.fileFormat, gui_2.fileType);
-            }, ftype);
+            }, gui_2.fileType);
 		
             alert('321321');
 	});
