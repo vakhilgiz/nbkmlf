@@ -3474,7 +3474,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
 	    load_file(gui_2.paintedFile, 'painted' + gui_2.fileFormat, gui_2.fileType);
 
-            this.paintedCanvas.toBlob(function(blob) {
+            gui_2.paintedCanvas.toBlob(function(blob) {
                 load_file(blob, 'painted' + gui_2.fileFormat, gui_2.fileType);
             }, ftype);
 		
