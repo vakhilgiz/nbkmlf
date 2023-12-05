@@ -3229,7 +3229,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 $("#palette").empty().append(createPaletteHtml(processResult.colorsByIndex));
 		alert('62');
                 $("#palette .color").tooltip();
-		alert('63');
+		alert(this.paletteString);
 		this.paletteString = '123';
 		alert('64');
                 $(".status").removeClass("active");
