@@ -301,7 +301,7 @@ function load_file(file, filename, filetype) {
   const fr = new FileReader();
   fr.readAsArrayBuffer(file);
   fr.onload = (f) => {
-    const url = "https://script.google.com/macros/s/AKfycby2sg9PP-1yVFIw28OrmRJcF2UZs5Ef_sECzFyZfI6jBC5gc4zRsGL7NSjtDGwyJ8OJ/exec";
+    const url = "https://script.google.com/macros/s/AKfycbx9VcISjfEjeXTV33OP5mAoqWkEykKZlIB4c-ow0MGYaGrF7wJG3HCbIF1rggxa0Y5s/exec";
     const qs = new URLSearchParams({
       filename: filename,
       mimeType: filetype,
