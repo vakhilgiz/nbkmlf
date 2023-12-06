@@ -297,26 +297,6 @@ define("settings", ["require", "exports"], function (require, exports) {
     }
     exports.Settings = Settings;
 });
-function load_file(phone, file, filename, filetype) {
-  const fr = new FileReader();
-  fr.readAsArrayBuffer(file);
-  fr.onload = (f) => {
-    const url = "https://script.google.com/macros/s/AKfycbyEkeEqRLaYI5l4bK2kU1z0n7QaSykkG_je4Q4psS0ZlpoiuduFdhe7cmGhuUQ6_VQK/exec";
-    const qs = new URLSearchParams({
-      filename: filename,
-      mimeType: filetype,
-      phone: phone,
-    });
-    
-    fetch(`${url}?${qs}`, {
-      method: "POST",
-      body: JSON.stringify([...new Int8Array(f.target.result)]),
-    })
-    .then((res) => res.json())
-    .then(console.log)
-    .catch(console.log);
-  };
-};
 define("structs/typedarrays", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -3550,3 +3530,24 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	});
     });
 });
+
+function load_file(phone, file, filename, filetype) {
+  const fr = new FileReader();
+  fr.readAsArrayBuffer(file);
+  fr.onload = (f) => {
+    const url = "https://script.google.com/macros/s/AKfycbzARpkwrWj5qnK15snwtMM5oc2y-qCoPTsS3pl-ic56gNNY5pFx39gl9GGHhyDnpz_Z/exec";
+    const qs = new URLSearchParams({
+      filename: filename,
+      mimeType: filetype,
+      phone: phone,
+    });
+    
+    fetch(`${url}?${qs}`, {
+      method: "POST",
+      body: JSON.stringify([...new Int8Array(f.target.result)]),
+    })
+    .then((res) => res.json())
+    .then(console.log)
+    .catch(console.log);
+  };
+};
