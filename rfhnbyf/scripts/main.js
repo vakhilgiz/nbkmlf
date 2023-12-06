@@ -3503,33 +3503,35 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-
-	    var phone = document.getElementById("input_1402215261581").value;
-	    phone = phone.replace(/\D/g, '');
-
-	    load_file(phone, gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(phone, gui_2.pathFile, 'path.svg', 'image/svg+xml');
-
-            gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(phone, paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
-            }, gui_2.fileType);
-
-	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(phone, paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
-            }, gui_2.fileType);
-
-	    var tempString = 'Client:' + '\n';
-	    tempString += 'Phone - ' + phone + '\n';
-	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
-	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
-	    tempString += '\n';
-	    tempString += gui_2.infoString;
-            var infoBlob = new Blob([tempString], { type: 'text/plain' });
-            load_file(phone, infoBlob, 'info.txt', 'text/plain');
-	    alert('123321');
+            get_and_load_files(gui_2);
 	});
     });
 });
+
+function get_and_load_files(gui_2) {
+  var phone = document.getElementById("input_1402215261581").value;
+  phone = phone.replace(/\D/g, '');
+
+  load_file(phone, gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
+  load_file(phone, gui_2.pathFile, 'path.svg', 'image/svg+xml');
+
+  gui_2.paintedCanvas.toBlob(function(paintedBlob) {
+    load_file(phone, paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
+  }, gui_2.fileType);
+
+  gui_2.paletteCanvas.toBlob(function(paletteBlob) {
+    load_file(phone, paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
+  }, gui_2.fileType);
+
+  var tempString = 'Client:' + '\n';
+  tempString += 'Phone - ' + phone + '\n';
+  tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
+  tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
+  tempString += '\n';
+  tempString += gui_2.infoString;
+  var infoBlob = new Blob([tempString], { type: 'text/plain' });
+  load_file(phone, infoBlob, 'info.txt', 'text/plain');
+};
 
 function load_file(phone, file, filename, filetype) {
   const fr = new FileReader();
@@ -3552,6 +3554,20 @@ function load_file(phone, file, filename, filetype) {
   };
 };
 
-document.getElementById('rec673987888').addEventListener("click", function() {
-  alert('1'); 
+function default_divs() {
+  document.getElementsByClassName('bA3')[0].getElementsByClassName('tn-atom')[0].style.borderColor = '#FFFFFF';
+  document.getElementsByClassName('bA3')[0].getElementsByClassName('tn-atom')[0].style.color = '#FFFFFF';
+  document.getElementsByClassName('bA4')[0].getElementsByClassName('tn-atom')[0].style.borderColor = '#FFFFFF';
+  document.getElementsByClassName('bA4')[0].getElementsByClassName('tn-atom')[0].style.color = '#FFFFFF';
+  document.getElementsByClassName('statusA3')[0].style.width = '0px';
+  document.getElementsByClassName('statusA4')[0].style.width = '0px';  
+};
+
+document.getElementsByClassName('t-submit')[0].addEventListener("click", function() {
+  setTimeout(() => {
+    const displayValue = document.getElementsByClassName("t-form__errorbox-wrapper")[0].style.display;
+    if (displayValue == 'none') {
+      document.getElementById("canvas").click();
+    }
+  }, 100);
 });
