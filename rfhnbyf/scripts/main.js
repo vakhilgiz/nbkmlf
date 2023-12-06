@@ -3523,7 +3523,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-		
+
 	    var phone = document.getElementById("input_1402215261581").value;
 	    phone = phone.replace(/\D/g, '');
 
@@ -3538,9 +3538,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
                 load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-	    var tempString = 'Date/Time: ' + cur_date + '\n';
-	    tempString += '\n';
-	    tempString += 'Client:' + '\n';
+	    var tempString = 'Client:' + '\n';
 	    tempString += 'Phone - ' + phone + '\n';
 	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
 	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
