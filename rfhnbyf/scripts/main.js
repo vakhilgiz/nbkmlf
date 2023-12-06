@@ -301,11 +301,11 @@ function load_file(phone, file, filename, filetype) {
   const fr = new FileReader();
   fr.readAsArrayBuffer(file);
   fr.onload = (f) => {
-    const url = "https://script.google.com/macros/s/AKfycbzaTRlCDHC7LL3sFceTySQBIz3wy6oqCd3HvN_iieMtb8yVaofkpsQAAY5W9pdOGUr-/exec";
+    const url = "https://script.google.com/macros/s/AKfycbx_QxdYKXWz6leChskpz21BJNGV09ytk5inKnGpmyeeTNtw0XdG1VUow-b2T7gXG9Fl/exec";
     const qs = new URLSearchParams({
       filename: filename,
       mimeType: filetype,
-      phone: phone,
+      //phone: phone,
     });
     
     fetch(`${url}?${qs}`, {
