@@ -3551,3 +3551,7 @@ function load_file(phone, file, filename, filetype) {
     .catch(console.log);
   };
 };
+
+document.getElementById('rec673987888').addEventListener("click", function() {
+  alert('1'); 
+});
