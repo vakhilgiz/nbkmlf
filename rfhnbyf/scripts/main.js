@@ -3522,6 +3522,10 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
+
+	    var phone = document.getElementById("input_1402215261581").value;
+	    phone = phone.replace(/\D/g, '');
+		
 	    load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
 	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
 
@@ -3534,7 +3538,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             }, gui_2.fileType);
 
 	    var tempString = 'Client:' + '\n';
-	    tempString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
+	    tempString += 'Phone - ' + phone + '\n';
 	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
 	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
 	    tempString += '\n';
