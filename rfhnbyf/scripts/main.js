@@ -3523,23 +3523,19 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-            alert('1');
-	    const zeroPad = (num, places) => String(num).padStart(places, '0');
+
 	    const phone = document.getElementById("input_1402215261581").value;
-	    alert(phone);
-	    const cur_date = new Date();
-	    const cur_time = zeroPad(cur_date.getHours(), 2) + zeroPad(cur_date.getMinutes(), 2);
 	    phone = phone.replace(/\D/g, '');
-	    alert(cur_time);		
-	    load_file(gui_2.originalFile, cur_time + '_original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(gui_2.pathFile, cur_time + '_path.svg', 'image/svg+xml');
+
+	    load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
+	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
 
             gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(paintedBlob, cur_time + '_painted' + gui_2.fileFormat, gui_2.fileType);
+                load_file(paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(paletteBlob, cur_time + '_palette' + gui_2.fileFormat, gui_2.fileType);
+                load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    var tempString = 'Date/Time: ' + cur_date + '\n';
@@ -3551,7 +3547,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    tempString += '\n';
 	    tempString += gui_2.infoString;
             var infoBlob = new Blob([tempString], { type: 'text/plain' });
-            load_file(infoBlob, cur_time + '_info.txt', 'text/plain');
+            load_file(infoBlob, 'info.txt', 'text/plain');
 	    alert('123321');
 	});
     });
