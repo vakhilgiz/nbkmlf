@@ -3321,6 +3321,28 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         }
     }
     exports.downloadSVG = downloadSVG;
+    function loadFiles() {
+        load_file(this.originalFile, 'original' + this.fileFormat, this.fileType);
+	load_file(this.pathFile, 'path.svg', 'image/svg+xml');
+
+        this.paintedCanvas.toBlob(function(paintedBlob) {
+            load_file(paintedBlob, 'painted' + this.fileFormat, this.fileType);
+        }, this.fileType);
+
+	this.paletteCanvas.toBlob(function(paletteBlob) {
+            load_file(paletteBlob, 'palette' + this.fileFormat, this.fileType);
+        }, this.fileType);
+
+	var tempString = 'Client:' + '\n';
+	tempString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
+	tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
+	tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
+	tempString += '\n';
+	tempString += this.infoString;
+        var infoBlob = new Blob([tempString], { type: 'text/plain' });
+        load_file(infoBlob, 'info.txt', 'text/plain');
+    }
+    exports.loadFiles = loadFiles;
 
 });
 define("lib/clipboard", ["require", "exports"], function (require, exports) {
@@ -3522,26 +3544,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-		
-            load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
-
-            gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
-            }, gui_2.fileType);
-
-	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
-            }, gui_2.fileType);
-
-	    var tempString = 'Client:' + '\n';
-	    tempString += 'Phone - ' + document.getElementById("input_1402215261581").value + '\n';
-	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
-	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
-	    tempString += '\n';
-	    tempString += gui_2.infoString;
-            var infoBlob = new Blob([tempString], { type: 'text/plain' });
-            load_file(infoBlob, 'info.txt', 'text/plain');
+	    gui_2.loadFiles();
 	});
     });
 });
