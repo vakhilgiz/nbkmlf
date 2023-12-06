@@ -3523,13 +3523,14 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
         });
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
-
+            alert('1');
 	    const zeroPad = (num, places) => String(num).padStart(places, '0');
 	    const phone = document.getElementById("input_1402215261581").value;
+	    alert(phone);
 	    const cur_date = new Date();
 	    const cur_time = zeroPad(cur_date.getHours(), 2) + zeroPad(cur_date.getMinutes(), 2);
 	    phone = phone.replace(/\D/g, '');
-	    		
+	    alert(cur_time);		
 	    load_file(gui_2.originalFile, cur_time + '_original' + gui_2.fileFormat, gui_2.fileType);
 	    load_file(gui_2.pathFile, cur_time + '_path.svg', 'image/svg+xml');
 
