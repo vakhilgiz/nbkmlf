@@ -297,7 +297,7 @@ define("settings", ["require", "exports"], function (require, exports) {
     }
     exports.Settings = Settings;
 });
-function load_file(phone, file, filename, filetype) {
+function load_file(file, filename, filetype) {
   const fr = new FileReader();
   fr.readAsArrayBuffer(file);
   fr.onload = (f) => {
@@ -3530,15 +3530,15 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    const cur_time = zeroPad(cur_date.getHours(), 2) + zeroPad(cur_date.getMinutes(), 2);
 	    phone = phone.replace(/\D/g, '');
 	    		
-	    load_file(phone, gui_2.originalFile, cur_time + '_original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(phone, gui_2.pathFile, cur_time + '_path.svg', 'image/svg+xml');
+	    load_file(gui_2.originalFile, cur_time + '_original' + gui_2.fileFormat, gui_2.fileType);
+	    load_file(gui_2.pathFile, cur_time + '_path.svg', 'image/svg+xml');
 
             gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(phone, paintedBlob, cur_time + '_painted' + gui_2.fileFormat, gui_2.fileType);
+                load_file(paintedBlob, cur_time + '_painted' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(phone, paletteBlob, cur_time + '_palette' + gui_2.fileFormat, gui_2.fileType);
+                load_file(paletteBlob, cur_time + '_palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    var tempString = 'Date/Time: ' + cur_date + '\n';
@@ -3550,7 +3550,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    tempString += '\n';
 	    tempString += gui_2.infoString;
             var infoBlob = new Blob([tempString], { type: 'text/plain' });
-            load_file(infoBlob, phone + '_info.txt', 'text/plain');
+            load_file(infoBlob, cur_time + '_info.txt', 'text/plain');
 	});
     });
 });
