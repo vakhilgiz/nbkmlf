@@ -3551,6 +3551,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    tempString += gui_2.infoString;
             var infoBlob = new Blob([tempString], { type: 'text/plain' });
             load_file(infoBlob, cur_time + '_info.txt', 'text/plain');
+	    alert('123321');
 	});
     });
 });
