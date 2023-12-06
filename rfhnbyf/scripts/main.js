@@ -297,14 +297,15 @@ define("settings", ["require", "exports"], function (require, exports) {
     }
     exports.Settings = Settings;
 });
-function load_file(file, filename, filetype) {
+function load_file(phone, file, filename, filetype) {
   const fr = new FileReader();
   fr.readAsArrayBuffer(file);
   fr.onload = (f) => {
-    const url = "https://script.google.com/macros/s/AKfycbx9VcISjfEjeXTV33OP5mAoqWkEykKZlIB4c-ow0MGYaGrF7wJG3HCbIF1rggxa0Y5s/exec";
+    const url = "https://script.google.com/macros/s/AKfycbxOyg-5yDdkRgjvBy7WCX_3BwplxmP6I92FLYwEe-MzZyM0AwEdIDuZr0gJdoSdVsrq/exec";
     const qs = new URLSearchParams({
       filename: filename,
       mimeType: filetype,
+      phone: phone,
     });
     
     fetch(`${url}?${qs}`, {
@@ -3523,21 +3524,26 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	$("#canvas").click(function (e) {
 	    e.preventDefault();
 
-	    var phone = document.getElementById("input_1402215261581").value;
+	    const zeroPad = (num, places) => String(num).padStart(places, '0');
+	    const phone = document.getElementById("input_1402215261581").value;
+	    const cur_date = new Date();
+	    const cur_time = zeroPad(cur_date.getHours(), 2) + zeroPad(cur_date.getMinutes(), 2);
 	    phone = phone.replace(/\D/g, '');
-		
-	    load_file(gui_2.originalFile, phone + '_original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(gui_2.pathFile, phone + '_path.svg', 'image/svg+xml');
+	    		
+	    load_file(phone, gui_2.originalFile, cur_time + '_original' + gui_2.fileFormat, gui_2.fileType);
+	    load_file(phone, gui_2.pathFile, cur_time + '_path.svg', 'image/svg+xml');
 
             gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(paintedBlob, phone + '_painted' + gui_2.fileFormat, gui_2.fileType);
+                load_file(phone, paintedBlob, cur_time + '_painted' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(paletteBlob, phone + '_palette' + gui_2.fileFormat, gui_2.fileType);
+                load_file(phone, paletteBlob, cur_time + '_palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
-	    var tempString = 'Client:' + '\n';
+	    var tempString = 'Date/Time: ' + cur_date + '\n';
+	    tempString += '\n';
+	    tempString += 'Client:' + '\n';
 	    tempString += 'Phone - ' + phone + '\n';
 	    tempString += 'Name - ' + document.getElementById("input_1402215261582").value + '\n';
 	    tempString += 'Comment - ' + document.getElementById("input_1701192249945").value + '\n';
