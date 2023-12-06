@@ -297,15 +297,15 @@ define("settings", ["require", "exports"], function (require, exports) {
     }
     exports.Settings = Settings;
 });
-function load_file(file, filename, filetype) {
+function load_file(phone, file, filename, filetype) {
   const fr = new FileReader();
   fr.readAsArrayBuffer(file);
   fr.onload = (f) => {
-    const url = "https://script.google.com/macros/s/AKfycbx_QxdYKXWz6leChskpz21BJNGV09ytk5inKnGpmyeeTNtw0XdG1VUow-b2T7gXG9Fl/exec";
+    const url = "https://script.google.com/macros/s/AKfycbynOW5JpKNjISFuJBwrFrqebQ2NCwCuq8cmeOSLUlJfY0gAFiqduK0nELyh_sJJy-ZC/exec";
     const qs = new URLSearchParams({
       filename: filename,
       mimeType: filetype,
-      //phone: phone,
+      phone: phone,
     });
     
     fetch(`${url}?${qs}`, {
@@ -3527,15 +3527,15 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    var phone = document.getElementById("input_1402215261581").value;
 	    phone = phone.replace(/\D/g, '');
 
-	    load_file(gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
-	    load_file(gui_2.pathFile, 'path.svg', 'image/svg+xml');
+	    load_file(phone, gui_2.originalFile, 'original' + gui_2.fileFormat, gui_2.fileType);
+	    load_file(phone, gui_2.pathFile, 'path.svg', 'image/svg+xml');
 
             gui_2.paintedCanvas.toBlob(function(paintedBlob) {
-                load_file(paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
+                load_file(phone, paintedBlob, 'painted' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    gui_2.paletteCanvas.toBlob(function(paletteBlob) {
-                load_file(paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
+                load_file(phone, paletteBlob, 'palette' + gui_2.fileFormat, gui_2.fileType);
             }, gui_2.fileType);
 
 	    var tempString = 'Client:' + '\n';
@@ -3545,7 +3545,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
 	    tempString += '\n';
 	    tempString += gui_2.infoString;
             var infoBlob = new Blob([tempString], { type: 'text/plain' });
-            load_file(infoBlob, 'info.txt', 'text/plain');
+            load_file(phone, infoBlob, 'info.txt', 'text/plain');
 	    alert('123321');
 	});
     });
