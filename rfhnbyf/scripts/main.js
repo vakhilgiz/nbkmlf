@@ -2991,15 +2991,22 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         if (addColorLabels) {
                             const txt = document.createElementNS(xmlns, "text");
                             txt.setAttribute("font-family", "Tahoma");
-                            const nrOfDigits = (f.color + "").length;
-                            txt.setAttribute("font-size", (fontSize / nrOfDigits) + "");
+                            txt.setAttribute("font-size", fontSize + "");
                             txt.setAttribute("dominant-baseline", "middle");
                             txt.setAttribute("text-anchor", "middle");
                             txt.setAttribute("fill", fontColor);
                             txt.textContent = f.color + "";
                             const subsvg = document.createElementNS(xmlns, "svg");
-                            subsvg.setAttribute("width", f.labelBounds.width * sizeMultiplier + "");
-                            subsvg.setAttribute("height", f.labelBounds.height * sizeMultiplier + "");
+                            var subsvgWidth = f.labelBounds.width * sizeMultiplier;
+                            var subsvgHeigth = f.labelBounds.height * sizeMultiplier;
+                            if (subsvgWidth > 50) {
+                                subsvgWidth = 50;
+                            }
+                            if (subsvgHeigth > 50) {
+                                subsvgHeigth = 50;
+                            }
+                            subsvg.setAttribute("width", subsvgWidth + "");
+                            subsvg.setAttribute("height", subsvgHeigth + "");
                             subsvg.setAttribute("overflow", "visible");
                             subsvg.setAttribute("viewBox", "-50 -50 100 100");
                             subsvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
