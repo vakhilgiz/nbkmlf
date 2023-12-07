@@ -2867,8 +2867,8 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 $(".status").removeClass("active");
                 $(".status.facetBorderSegmentation").addClass("complete");
                 gui_1.timeEnd("Facet border segmentation");
-		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cBorderSegmentation").toDataURL()})`;
-                document.getElementById("second_diff_img").src = document.getElementById("cBorderSegmentation").toDataURL();
+		//document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${document.getElementById("cBorderSegmentation").toDataURL()})`;
+                //document.getElementById("second_diff_img").src = document.getElementById("cBorderSegmentation").toDataURL();
 		return cBorderSegment;
             });
         }
@@ -3133,6 +3133,9 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const svgData = svgEl.outerHTML;
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
+
+		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${this.pathFile})`;
+                document.getElementById("second_diff_img").src = this.pathFile;
 
 		this.paintedCanvas = document.getElementById("cReduction");
 
