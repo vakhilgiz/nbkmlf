@@ -2904,7 +2904,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
         /**
          *  Creates a vector based SVG image of the facets with the given configuration
          */
-        static createSVG(facetResult, colorsByIndex, sizeMultiplier, fill, stroke, addColorLabels, fontSize = 50, fontColor = "black", onUpdate = null) {
+        static createSVG(fontRatio, facetResult, colorsByIndex, sizeMultiplier, fill, stroke, addColorLabels, fontSize = 50, fontColor = "black", onUpdate = null) {
             return __awaiter(this, void 0, void 0, function* () {
                 const xmlns = "http://www.w3.org/2000/svg";
                 const svg = document.createElementNS(xmlns, "svg");
@@ -2991,7 +2991,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                         if (addColorLabels) {
                             const txt = document.createElementNS(xmlns, "text");
                             txt.setAttribute("font-family", "Tahoma");
-                            txt.setAttribute("font-size", fontSize + "");
+                            txt.setAttribute("font-size", (fontSize / fontRatio) + "");
                             txt.setAttribute("dominant-baseline", "middle");
                             txt.setAttribute("text-anchor", "middle");
                             txt.setAttribute("fill", fontColor);
@@ -3204,13 +3204,17 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const fontColor = "#000";
 		var v_statusBar = document.getElementsByClassName('statusA4')[0];
 		var v_statusButton = document.getElementsByClassName('bA4')[0];
+		let fontRatio = 1;
+                if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) { //false = A4; true = A3;
+                    fontRatio = 2;
+                }
 		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
                   v_statusBar = document.getElementsByClassName('statusA3')[0];
 		  v_statusButton = document.getElementsByClassName('bA3')[0];
                 }
                 $(".status.SVGGenerate").removeClass("complete");
                 $(".status.SVGGenerate").addClass("active");
-                const svg = yield guiprocessmanager_1.GUIProcessManager.createSVG(processResult.facetResult, processResult.colorsByIndex, sizeMultiplier, fill, stroke, showLabels, fontSize, fontColor, (progress) => {
+                const svg = yield guiprocessmanager_1.GUIProcessManager.createSVG(fontRatio, processResult.facetResult, processResult.colorsByIndex, sizeMultiplier, fill, stroke, showLabels, fontSize, fontColor, (progress) => {
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
