@@ -3134,8 +3134,25 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
 
-		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${URL.createObjectURL(this.pathFile)})`;
-                document.getElementById("second_diff_img").src = URL.createObjectURL(this.pathFile);
+		const compressImage = async (file, { quality = 1, type = file.type }) => {
+		    const imageBitmap = await createImageBitmap(file);
+		    const imageCanvas = document.createElement('imageCanvas');
+		    imageCanvas.width = imageBitmap.width;
+		    imageCanvas.height = imageBitmap.height;
+		    const ctx = imageCanvas.getContext('2d');
+		    ctx.drawImage(imageBitmap, 0, 0);
+		    return await new Promise((resolve) =>
+		        imageCanvas.toBlob(resolve, type, quality)
+		    );
+		};
+
+		const compressedFile = await compressImage(file, {
+                    quality: 0.5,
+                    type: 'image/jpeg',
+		});
+
+		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${URL.createObjectURL(compressedFile)})`;
+                document.getElementById("second_diff_img").src = URL.createObjectURL(compressedFile);
 
 		this.paintedCanvas = document.getElementById("cReduction");
 
