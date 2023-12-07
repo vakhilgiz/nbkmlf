@@ -277,22 +277,22 @@ define("settings", ["require", "exports"], function (require, exports) {
     })(ClusteringColorSpace = exports.ClusteringColorSpace || (exports.ClusteringColorSpace = {}));
     class Settings {
         constructor() {
-            this.kMeansNrOfClusters = 16;
             this.kMeansMinDeltaDifference = 1;
             this.kMeansClusteringColorSpace = ClusteringColorSpace.RGB;
             this.kMeansColorRestrictions = [];
             this.colorAliases = {};
             this.narrowPixelStripCleanupRuns = 3; // 3 seems like a good compromise between removing enough narrow pixel strips to convergence. This fixes e.g. https://i.imgur.com/dz4ANz1.png
-            this.removeFacetsSmallerThanNrOfPoints = 20;
             this.removeFacetsFromLargeToSmall = true;
-            this.maximumNumberOfFacets = Number.MAX_VALUE;
             this.nrOfTimesToHalveBorderSegments = 2;
             this.resizeImageIfTooLarge = true;
             this.resizeImageWidth = 1024;
             this.resizeImageHeight = 1024;
+	    this.kMeansNrOfClusters = 16;
+	    this.maximumNumberOfFacets = Number.MAX_VALUE;
             this.randomSeed = new Date().getTime();
-	    this.statusBar = document.getElementsByClassName('statusA3')[0];
-	    this.statusButton = document.getElementsByClassName('statusA3')[0];
+	    this.statusBar = null;
+	    this.statusButton = null;
+	    this.removeFacetsSmallerThan = 5; //5 - A3; 9 - A4
         }
     }
     exports.Settings = Settings;
@@ -1700,16 +1700,23 @@ define("facetReducer", ["require", "exports", "colorreductionmanagement", "commo
                     facetProcessingOrder.reverse();
                 }
                 let curTime = new Date().getTime();
+		let facetMaxHeigth = 0;
+                let facetMaxWidth = 0;
                 for (let fidx = 0; fidx < facetProcessingOrder.length; fidx++) {
                     const f = facetResult.facets[facetProcessingOrder[fidx]];
                     // facets can be removed by merging by others due to a previous facet deletion
-                    if (f != null && f.pointCount < smallerThan) {
-                        FacetReducer.deleteFacet(f.id, facetResult, imgColorIndices, colorDistances, visitedCache);
-                        if (new Date().getTime() - curTime > 500) {
-                            curTime = new Date().getTime();
-                            yield common_4.delay(0);
-                            if (onUpdate != null) {
-                                onUpdate(0.5 * fidx / facetProcessingOrder.length);
+                    if (f != null) {
+                        facetMaxHeigth = f.bbox.maxY - f.bbox.minY + 1;
+                        facetMaxWidth = f.bbox.maxX - f.bbox.minX + 1;
+                        //if (f != null && f.pointCount < smallerThan) {
+                        if ((facetMaxHeigth < smallerThan) || (facetMaxWidth < smallerThan)) {
+                            FacetReducer.deleteFacet(f.id, facetResult, imgColorIndices, colorDistances, visitedCache);
+                            if (new Date().getTime() - curTime > 500) {
+                                curTime = new Date().getTime();
+                                yield common_4.delay(0);
+                                if (onUpdate != null) {
+                                    onUpdate(0.5 * fidx / facetProcessingOrder.length);
+                                }
                             }
                         }
                     }
@@ -2717,14 +2724,6 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
         }
         static processKmeansClustering(imgData, ctx, settings, cancellationToken) {
             return __awaiter(this, void 0, void 0, function* () {
-		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
-                  settings.statusBar = document.getElementsByClassName('statusA3')[0];
-		  settings.statusButton = document.getElementsByClassName('bA3')[0];
-                }
-		else {
-                  settings.statusBar = document.getElementsByClassName('statusA4')[0];
-		  settings.statusButton = document.getElementsByClassName('bA4')[0];
-		}
                 gui_1.time("K-means clustering");
                 const cKmeans = document.getElementById("cKMeans");
                 cKmeans.width = imgData.width;
@@ -2778,7 +2777,7 @@ define("guiprocessmanager", ["require", "exports", "colorreductionmanagement", "
                 ctxReduction.fillRect(0, 0, cReduction.width, cReduction.height);
                 const reductionImgData = ctxReduction.getImageData(0, 0, cReduction.width, cReduction.height);
                 $(".status.facetReduction").addClass("active");
-                yield facetReducer_1.FacetReducer.reduceFacets(settings.removeFacetsSmallerThanNrOfPoints, settings.removeFacetsFromLargeToSmall, settings.maximumNumberOfFacets, colormapResult.colorsByIndex, facetResult, colormapResult.imgColorIndices, (progress) => {
+                yield facetReducer_1.FacetReducer.reduceFacets(settings.removeFacetsSmallerThan, settings.removeFacetsFromLargeToSmall, settings.maximumNumberOfFacets, colormapResult.colorsByIndex, facetResult, colormapResult.imgColorIndices, (progress) => {
                     if (cancellationToken.isCancelled) {
                         throw new Error("Cancelled");
                     }
@@ -3072,7 +3071,6 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         }
         settings.randomSeed = 0;
         settings.kMeansMinDeltaDifference = 1;
-        settings.removeFacetsSmallerThanNrOfPoints = 25;
         settings.nrOfTimesToHalveBorderSegments = 2;
         settings.narrowPixelStripCleanupRuns = 3;
         settings.resizeImageIfTooLarge = true;
@@ -3080,6 +3078,16 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
         settings.resizeImageHeight = 1024;
         settings.kMeansNrOfClusters = parseInt($("#txtNrOfClusters").val() + "");
         settings.maximumNumberOfFacets = parseInt($("#txtMaximumNumberOfFacets").val() + "");
+	if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+            settings.statusBar = document.getElementsByClassName('statusA3')[0];
+	    settings.statusButton = document.getElementsByClassName('bA3')[0];
+	    settings.removeFacetsSmallerThan = 5;
+        }
+	else {
+            settings.statusBar = document.getElementsByClassName('statusA4')[0];
+	    settings.statusButton = document.getElementsByClassName('bA4')[0];
+	    settings.removeFacetsSmallerThan = 9;
+	}
         return settings;
     }
     exports.parseSettings = parseSettings;
