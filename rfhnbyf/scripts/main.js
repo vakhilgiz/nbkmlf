@@ -3134,7 +3134,6 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
 
-		document.getElementById("second_diff_img").onload = convert;
 		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${URL.createObjectURL(this.pathFile)})`;
                 document.getElementById("second_diff_img").src = URL.createObjectURL(this.pathFile);
 
@@ -3594,14 +3593,3 @@ document.getElementsByClassName('t-submit')[0].addEventListener("click", functio
     }
   }, 100);
 });
-
-function convert() {
-  URL.revokeObjectURL(this.src); 
-  var c = document.createElement("canvas"),
-      ctx = c.getContext("2d");
-  c.width = this.width;
-  c.height = this.height;
-  ctx.drawImage(this, 0, 0);
-  var jpeg = c.toDataURL("image/jpeg", 0.01);
-  console.log(jpeg.length)
-}
