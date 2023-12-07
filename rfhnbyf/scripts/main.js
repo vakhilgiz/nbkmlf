@@ -3146,7 +3146,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		    );
 		};
 
-		const compressedFile = await compressImage(file, {
+		const compressedFile = await compressImage(this.pathFile, {
                     quality: 0.5,
                     type: 'image/jpeg',
 		});
