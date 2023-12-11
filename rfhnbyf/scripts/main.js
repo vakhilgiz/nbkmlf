@@ -3206,10 +3206,8 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
 		var v_statusBar = document.getElementsByClassName('statusA4')[0];
 		var v_statusButton = document.getElementsByClassName('bA4')[0];
 		let fontRatio = 1;
-                if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) { //false = A4; true = A3;
-                    fontRatio = 2;
-                }
-		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+		if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) { //false = A4; true = A3;
+		  fontRatio = 2;
                   v_statusBar = document.getElementsByClassName('statusA3')[0];
 		  v_statusButton = document.getElementsByClassName('bA3')[0];
                 }
@@ -3482,6 +3480,7 @@ define("main", ["require", "exports", "gui", "lib/clipboard"], function (require
             const files = $("#file").get(0).files;
 	    gui_2.originalFile = files[0];
             if (files !== null && files.length > 0) {
+		default_divs();
                 const reader = new FileReader();
                 reader.onloadend = function () {
                     const img = document.createElement("img");
@@ -3627,6 +3626,12 @@ async function downScaleResultImages(file, second_diff_image, loaded_image) {
   URL.revokeObjectURL(myImage);
 };
 
+$(window).on("load", function () {
+  $('.splitpic-horizontal .splitpic-images').each(function (i, v) {
+    var sp = new SplitPic(v);
+  });        
+});
+
 document.getElementsByClassName('t-submit')[0].addEventListener("click", function() {
   setTimeout(() => {
     const displayValue = document.getElementsByClassName("t-form__errorbox-wrapper")[0].style.display;
@@ -3634,4 +3639,20 @@ document.getElementsByClassName('t-submit')[0].addEventListener("click", functio
       document.getElementById("canvas").click();
     }
   }, 100);
+});
+
+document.getElementsByClassName('bA3')[0].addEventListener("click", function() {
+  if (document.getElementsByClassName('lFormat')[0].textContent.includes('A4')) {
+    document.getElementById("file").value = null;
+  }
+  document.getElementsByClassName('lFormat')[0].textContent = 'A3';
+  document.getElementById("file").click();
+});
+  
+document.getElementsByClassName('bA4')[0].addEventListener("click", function() {
+  if (document.getElementsByClassName('lFormat')[0].textContent.includes('A3')) {
+    document.getElementById("file").value = null;
+  }
+  document.getElementsByClassName('lFormat')[0].textContent = 'A4';
+  document.getElementById("file").click();
 });
