@@ -3133,7 +3133,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const svgData = svgEl.outerHTML;
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
-                downScaleResultImages(pathFile, document.getElementById("second_diff_img"), document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0]);
+                downScaleResultImages(this.pathFile, document.getElementById("second_diff_img"), document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0]);
 
 		this.paintedCanvas = document.getElementById("cReduction");
 
