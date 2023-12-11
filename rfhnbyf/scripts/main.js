@@ -3133,9 +3133,7 @@ define("gui", ["require", "exports", "common", "guiprocessmanager", "settings"],
                 const svgData = svgEl.outerHTML;
                 const preface = '<?xml version="1.0" standalone="no"?>\r\n';
                 this.pathFile = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
-
-		document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0].style.backgroundImage = `url(${URL.createObjectURL(this.pathFile)})`;
-                document.getElementById("second_diff_img").src = URL.createObjectURL(this.pathFile);
+                downScaleResultImages(pathFile, document.getElementById("second_diff_img"), document.getElementsByClassName("loaded_img")[0].getElementsByClassName("tn-atom")[0]);
 
 		this.paintedCanvas = document.getElementById("cReduction");
 
@@ -3583,6 +3581,50 @@ function default_divs() {
   document.getElementsByClassName('bA4')[0].getElementsByClassName('tn-atom')[0].style.color = '#FFFFFF';
   document.getElementsByClassName('statusA3')[0].style.width = '0px';
   document.getElementsByClassName('statusA4')[0].style.width = '0px';  
+};
+
+function compressImage(image, scale, initalWidth, initalHeight) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = scale * initalWidth;
+    canvas.height = scale * initalHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    ctx.canvas.toBlob((blob) => {
+      resolve(blob);
+    }, "image/png", 0.5); 
+  }); 
+};
+
+function getImageDimensions(image) {
+  return new Promise((resolve, reject) => {
+    image.onload = function(e) {
+      const width = this.width;
+      const height = this.height;
+      resolve({height, width});
+    }
+  });
+};
+  
+async function downScaleResultImages(file, second_diff_image, loaded_image) {
+  var myImage = document.createElement('img');
+  myImage.src = URL.createObjectURL(file);
+
+  const {height, width} = await getImageDimensions(myImage); 
+  const MAX_WIDTH = 1024;
+  const MAX_HEIGHT = 1024;
+  const widthRatioBlob = await compressImage(myImage, MAX_WIDTH / width, width, height); 
+  const heightRatioBlob = await compressImage(myImage, MAX_HEIGHT / height, width, height);
+  const compressedBlob = widthRatioBlob.size > heightRatioBlob.size ? heightRatioBlob : widthRatioBlob;
+
+  loaded_image.style.backgroundImage = `url(${URL.createObjectURL(compressedBlob)})`;
+  second_diff_image.src = URL.createObjectURL(compressedBlob);
+    
+  for (let i = 0; i < images.length; i++) {
+    images[i].src = URL.createObjectURL(compressedBlob);
+  }
+    
+  URL.revokeObjectURL(myImage);
 };
 
 document.getElementsByClassName('t-submit')[0].addEventListener("click", function() {
