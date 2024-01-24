@@ -279,7 +279,7 @@ define("settings", ["require", "exports"], function (require, exports) {
         constructor() {
             this.kMeansMinDeltaDifference = 1;
             this.kMeansClusteringColorSpace = ClusteringColorSpace.RGB;
-            this.kMeansColorRestrictions = [];
+            this.kMeansColorRestrictions = [[255, 255, 255], [207, 207, 172], [191, 157, 67], [210, 139, 171], [36, 63, 46], [179, 119, 59], [108, 111, 92], [0, 0, 0], [31, 53, 139], [122, 79, 60], [176, 76, 26], [149, 144, 76], [144, 169, 140], [58, 54, 27], [163, 55, 29], [172, 97, 30], [134, 102, 45], [37, 98, 161], [35, 79, 128], [158, 155, 78], [74, 48, 33], [144, 75, 36], [48, 29, 22], [41, 58, 40], [117, 65, 77], [34, 40, 40], [60, 51, 82], [36, 31, 53], [160, 138, 200], [226, 108, 80], [37, 63, 52], [109, 58, 101], [108, 93, 160], [188, 71, 51], [125, 92, 77], [190, 149, 131], [146, 107, 90], [160, 127, 122], [31, 30, 28], [151, 102, 46]];
             this.colorAliases = {};
             this.narrowPixelStripCleanupRuns = 3; // 3 seems like a good compromise between removing enough narrow pixel strips to convergence. This fixes e.g. https://i.imgur.com/dz4ANz1.png
             this.removeFacetsFromLargeToSmall = true;
